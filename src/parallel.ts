@@ -32,6 +32,8 @@ export class Parallel {
 
     public execute<T extends any = any>(promises: Array<PromiseFunction<T>>): Promise<T[]> {
 
+        let count: number = 0;
+
         const cloned: Array<KeyedPromiseFunction<T>> = this._mapPromiseFunctions(promises);
         const responses: T[] = [];
 
@@ -40,12 +42,14 @@ export class Parallel {
             const func: KeyedPromiseFunction<T> | undefined = cloned.shift();
 
             if (!func) {
-                resolve();
+                return;
             }
+
             func.func().then((response: T) => {
 
-                response[func.key] = response;
+                responses[func.key] = response;
                 run(resolve, reject);
+                return;
             }).catch((reason: any) => {
 
                 if (this._whenReject) {
@@ -55,6 +59,12 @@ export class Parallel {
                     }
                 }
                 reject(reason);
+                return;
+            }).finally(() => {
+
+                count++;
+                resolve();
+                return;
             });
         };
 
@@ -63,7 +73,11 @@ export class Parallel {
             for (let i = 0; i < this._limit; i++) {
 
                 run(() => {
-                    resolve(responses);
+
+                    if (count === promises.length) {
+                        resolve(responses);
+                    }
+                    return;
                 }, reject);
             }
         });
