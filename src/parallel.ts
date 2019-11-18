@@ -4,7 +4,7 @@
  * @description Parallel
  */
 
-import { KeyedPromiseFunction, PromiseFunction } from "./declare";
+import { KeyedPromiseFunction, PromiseFunction, RejectFunction } from "./declare";
 
 export class Parallel {
 
@@ -15,9 +15,19 @@ export class Parallel {
 
     private readonly _limit: number;
 
+    private _whenReject: RejectFunction | null;
+
     private constructor(limit: number) {
 
         this._limit = limit;
+
+        this._whenReject = null;
+    }
+
+    public whenReject(func: RejectFunction): this {
+
+        this._whenReject = func;
+        return this;
     }
 
     public execute<T extends any = any>(promises: Array<PromiseFunction<T>>): Promise<T[]> {
@@ -36,6 +46,15 @@ export class Parallel {
 
                 response[func.key] = response;
                 run(resolve, reject);
+            }).catch((reason: any) => {
+
+                if (this._whenReject) {
+                    if (this._whenReject(reason)) {
+                        run(resolve, reject);
+                        return;
+                    }
+                }
+                reject(reason);
             });
         };
 
