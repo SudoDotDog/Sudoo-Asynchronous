@@ -2,7 +2,6 @@
   "name": "@sudoo/asynchronous",
   "version": "1.0.0",
   "description": ":speedboat: Asynchronous Management",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
   },
@@ -22,7 +21,7 @@
   "dependencies": {},
   "devDependencies": {
     "@sudoo/io": "^1.6.1",
-    "@sudoo/triforce": "^2.0.3"
+    "@sudoo/triforce": "^2.0.4"
   },
   "nyc": {
     "extension": [
