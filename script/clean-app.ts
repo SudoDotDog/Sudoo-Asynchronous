@@ -19,4 +19,3 @@ for (const file of files) {
 
     RMRFFolder(Path.join(appPath, file));
 }
-
