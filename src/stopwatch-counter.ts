@@ -12,14 +12,17 @@ export class CounterStopwatch {
     }
 
     private readonly _resetInterval: number;
+    private readonly _timer: any;
 
     private _counter: number;
 
     private constructor(resetInterval: number) {
 
         this._resetInterval = resetInterval;
-
         this._counter = 0;
+        this._timer = setInterval(() => {
+            this._counter = 0;
+        }, this._resetInterval);
     }
 
     public get counter(): number {
@@ -30,6 +33,18 @@ export class CounterStopwatch {
     public plus(amount: number = 1): this {
 
         this._counter = this._counter + amount;
+        return this;
+    }
+
+    public reset(): this {
+
+        this._counter = 0;
+        return this;
+    }
+
+    public destroy(): this {
+
+        clearInterval(this._timer);
         return this;
     }
 }
