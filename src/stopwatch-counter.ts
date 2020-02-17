@@ -6,9 +6,9 @@
 
 export class CounterStopwatch {
 
-    public static create(resetInterval: number): CounterStopwatch {
+    public static create(resetInterval: number, directlyStart: boolean = false): CounterStopwatch {
 
-        return new CounterStopwatch(resetInterval);
+        return new CounterStopwatch(resetInterval, directlyStart);
     }
 
     private readonly _resetInterval: number;
@@ -16,10 +16,13 @@ export class CounterStopwatch {
     private _timer: any = null;
     private _counter: number;
 
-    private constructor(resetInterval: number) {
+    private constructor(resetInterval: number, directlyStart: boolean) {
 
         this._resetInterval = resetInterval;
         this._counter = 0;
+        if (directlyStart) {
+            this.start();
+        }
     }
 
     public get counter(): number {
