@@ -1,23 +1,31 @@
 # Paths
-build := typescript/tsconfig.build.json
-dev := typescript/tsconfig.dev.json
+tsconfig_build_path := typescript/tsconfig.build.json
 
 # NPX functions
 tsc := node_modules/.bin/tsc
-ts_node := node_modules/.bin/ts-node
+docz := node_modules/.bin/docz
 mocha := node_modules/.bin/mocha
+ts_node := node_modules/.bin/ts-node
 
 .IGNORE: clean-linux
 
-main: dev
+main: run
 
-dev:
-	@echo "[INFO] Building for development"
-	@NODE_ENV=development $(tsc) --p $(dev)
+run: 
+	@echo "[INFO] Starting docz environment"
+	@NODE_ENV=development $(docz) dev
 
 build:
-	@echo "[INFO] Building for production"
-	@NODE_ENV=production $(tsc) --p $(build)
+	@echo "[INFO] Building for release"
+	@NODE_ENV=production $(tsc) --p $(tsconfig_build_path)
+
+ts-version:
+	@echo "[INFO] Getting TypeScript Version"
+	@NODE_ENV=development $(tsc) --version
+
+docz:
+	@echo "[INFO] Building docz"
+	@NODE_ENV=development $(docz) build
 
 tests:
 	@echo "[INFO] Testing with Mocha"
@@ -32,10 +40,6 @@ install:
 	@echo "[INFO] Installing dev Dependencies"
 	@yarn install --production=false
 
-install-prod:
-	@echo "[INFO] Installing Dependencies"
-	@yarn install --production=true
-
 license: clean
 	@echo "[INFO] Sign files"
 	@NODE_ENV=development $(ts_node) script/license.ts
@@ -47,9 +51,10 @@ clean: clean-linux
 clean-linux:
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
-	@rm -rf dist_script
+	@rm -rf build
 	@rm -rf .nyc_output
 	@rm -rf coverage
+	@rm -rf storybook-static
 
 publish: install tests license build
 	@echo "[INFO] Publishing package"
