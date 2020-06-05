@@ -1,6 +1,6 @@
 {
   "name": "@sudoo/asynchronous",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": ":speedboat: Asynchronous Management",
   "directories": {
     "doc": "docs"
