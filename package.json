@@ -20,8 +20,8 @@
   "homepage": "https://github.com/SudoDotDog/Sudoo-Asynchronous#readme",
   "dependencies": {},
   "devDependencies": {
-    "@sudoo/io": "^1.7.0",
-    "@sudoo/triforce": "^2.2.1"
+    "@sudoo/io": "^1.8.0",
+    "@sudoo/triforce": "^2.4.1"
   },
   "nyc": {
     "extension": [
