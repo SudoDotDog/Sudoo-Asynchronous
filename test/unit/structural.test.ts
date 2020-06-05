@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { ParallelPool } from "../../src/parallel";
+import { StructuralRunner } from "../../src";
 
 describe('Given {StructuralRunner} Class', (): void => {
 
@@ -15,9 +15,27 @@ describe('Given {StructuralRunner} Class', (): void => {
 
     it('should be able to construct', (): void => {
 
-        const LIMIT: number = 5;
+        const runner: StructuralRunner<{
+            a: number;
+        }> = StructuralRunner.create({
+            a: async () => 10,
+        });
 
-        const parallel: ParallelPool = ParallelPool.create(LIMIT);
-        expect(parallel).to.be.instanceOf(ParallelPool);
+        expect(runner).to.be.instanceOf(StructuralRunner);
+    });
+
+    it('should be able to execute', async (): Promise<void> => {
+
+        const runner: StructuralRunner<{
+            a: number;
+        }> = StructuralRunner.create({
+            a: async () => 10,
+        });
+
+        const result = await runner.start();
+
+        expect(result).to.be.deep.equal({
+
+        });
     });
 });

@@ -7,10 +7,10 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
+import { ParallelPool } from "../../src";
 import { PromiseFunction } from "../../src/declare";
-import { Parallel } from "../../src/parallel";
 
-describe('Given {Parallel} Class Scenario', (): void => {
+describe('Given {ParallelPool} Class Scenario', (): void => {
 
     const chance: Chance.Chance = new Chance('scenario-asynchronous-parallel');
 
@@ -39,7 +39,7 @@ describe('Given {Parallel} Class Scenario', (): void => {
             }));
         }
 
-        const parallel: Parallel = Parallel.create(LIMIT);
+        const parallel: ParallelPool = ParallelPool.create(LIMIT);
 
         const result = await parallel.execute(functions);
 
@@ -78,7 +78,7 @@ describe('Given {Parallel} Class Scenario', (): void => {
             }));
         }
 
-        const parallel: Parallel = Parallel.create(LIMIT);
+        const parallel: ParallelPool = ParallelPool.create(LIMIT);
         let error: string = '';
 
         try {
@@ -125,7 +125,7 @@ describe('Given {Parallel} Class Scenario', (): void => {
         // tslint:disable-next-line: no-magic-numbers
         expectedResult[7] = undefined as any;
 
-        const parallel: Parallel = Parallel.create(LIMIT);
+        const parallel: ParallelPool = ParallelPool.create(LIMIT);
         parallel.whenReject((_: any) => true);
 
         const result = await parallel.execute(functions);
@@ -171,7 +171,7 @@ describe('Given {Parallel} Class Scenario', (): void => {
             }));
         }
 
-        const parallel: Parallel = Parallel.create(LIMIT);
+        const parallel: ParallelPool = ParallelPool.create(LIMIT);
         parallel.whenReject((reason: any) => reason === 'RIGHT');
         let error: string = '';
 

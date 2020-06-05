@@ -14,9 +14,9 @@ export type StructuralRunnerConditionedResult<T> = {
 
 export class StructuralRunner<T extends Record<string, any>> {
 
-    public static create<T extends Record<string, any>>(functions: AsyncExecutableRecord<T>) {
+    public static create<T extends Record<string, any> = {}>(functions: AsyncExecutableRecord<T>) {
 
-        return new StructuralRunner(functions);
+        return new StructuralRunner<T>(functions);
     }
 
     private readonly _functions: AsyncExecutableRecord<T>;
@@ -26,7 +26,7 @@ export class StructuralRunner<T extends Record<string, any>> {
         this._functions = functions;
     }
 
-    public async run(...args: any[]): Promise<StructuralRunnerConditionedResult<T>> {
+    public async start(...args: any[]): Promise<StructuralRunnerConditionedResult<T>> {
 
         const keys: Array<keyof T> = Object.keys(this._functions);
         const list: Array<NamedPromiseFunction<keyof T, T[keyof T]>> = [];

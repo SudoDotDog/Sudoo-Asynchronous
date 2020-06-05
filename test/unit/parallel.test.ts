@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { ParallelPool } from "../../src/parallel";
+import { ParallelPool } from "../../src";
 
 describe('Given {ParallelPool} Class', (): void => {
 
