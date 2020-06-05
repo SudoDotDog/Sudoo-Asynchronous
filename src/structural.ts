@@ -6,6 +6,12 @@
 
 import { AsyncExecutableRecord, NamedPromiseFunction, NamedResult, PromiseFunction } from "./declare";
 
+export type StructuralRunnerConditionedResult<T> = {
+
+    readonly succeed: Partial<T>;
+    readonly failed: Partial<Record<keyof T, any>>;
+};
+
 export class StructuralRunner<T extends Record<string, any>> {
 
     public static create<T extends Record<string, any>>(functions: AsyncExecutableRecord<T>) {
@@ -20,7 +26,7 @@ export class StructuralRunner<T extends Record<string, any>> {
         this._functions = functions;
     }
 
-    public async run(...args: any[]): Promise<T> {
+    public async run(...args: any[]): Promise<StructuralRunnerConditionedResult<T>> {
 
         const keys: Array<keyof T> = Object.keys(this._functions);
         const list: Array<NamedPromiseFunction<keyof T, T[keyof T]>> = [];
@@ -53,13 +59,34 @@ export class StructuralRunner<T extends Record<string, any>> {
         });
 
         const executed: Array<NamedResult<keyof T, T[keyof T]>> = await Promise.all(awaitables);
-        const results: Partial<T> = executed.reduce((previous: Partial<T>, current: NamedResult<keyof T, T[keyof T]>) => {
-            return {
-                ...previous,
-                [current.name]: current.succeed as any,
-            };
-        }, {} as Partial<T>);
+        const results: StructuralRunnerConditionedResult<T> = executed.reduce((previous: StructuralRunnerConditionedResult<T>, current: NamedResult<keyof T, T[keyof T]>) => {
 
-        return results as T;
+            if (current.succeed === true) {
+                return {
+                    ...previous,
+                    succeed: {
+                        ...previous.succeed,
+                        [current.name]: current.result,
+                    },
+                };
+            }
+
+            if (current.succeed === false) {
+                return {
+                    ...previous,
+                    failed: {
+                        ...previous.failed,
+                        [current.name]: current.reason,
+                    },
+                };
+            }
+
+            return previous;
+        }, {
+            succeed: {},
+            failed: {},
+        } as StructuralRunnerConditionedResult<T>);
+
+        return results;
     }
 }
