@@ -13,3 +13,7 @@ export type KeyedPromiseFunction<T> = {
     readonly key: number;
     readonly func: PromiseFunction<T>;
 };
+
+export type Promisify<T extends Record<string, any>> = {
+    [K in keyof T]: Promise<T[K]>;
+};
