@@ -42,6 +42,24 @@ describe('Given {StructuralRunner} Class', (): void => {
         });
     });
 
+    it('should be able to execute - args', async (): Promise<void> => {
+
+        const runner: StructuralRunner<{
+            a: number;
+        }> = StructuralRunner.create({
+            a: async (value: number) => value + 1,
+        });
+
+        const result = await runner.start(9);
+
+        expect(result).to.be.deep.equal({
+            failed: {},
+            succeed: {
+                a: 10,
+            },
+        });
+    });
+
     it('should be able to execute - multiple', async (): Promise<void> => {
 
         const errorInstance: Error = new Error(chance.string());
@@ -66,6 +84,51 @@ describe('Given {StructuralRunner} Class', (): void => {
                 a: 10,
                 b: 1,
             },
+        });
+    });
+
+    it('should be able to execute ignore failed', async (): Promise<void> => {
+
+        const errorInstance: Error = new Error(chance.string());
+        const runner: StructuralRunner<{
+            a: number;
+            b: number;
+        }> = StructuralRunner.create({
+            a: async () => 10,
+            b: async () => 1,
+            c: async () => {
+                throw errorInstance;
+            },
+        });
+
+        const result = await runner.startIgnoreFailed();
+
+        expect(result).to.be.deep.equal({
+            a: 10,
+            b: 1,
+        });
+    });
+
+    it('should be able to execute replace failed', async (): Promise<void> => {
+
+        const errorInstance: Error = new Error(chance.string());
+        const runner: StructuralRunner<{
+            a: number;
+            b: number;
+        }> = StructuralRunner.create({
+            a: async () => 10,
+            b: async () => 1,
+            c: async () => {
+                throw errorInstance;
+            },
+        });
+
+        const result = await runner.startReplaceFailed(errorInstance);
+
+        expect(result).to.be.deep.equal({
+            a: 10,
+            b: 1,
+            c: errorInstance,
         });
     });
 });

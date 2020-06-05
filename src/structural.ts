@@ -26,6 +26,30 @@ export class StructuralRunner<T extends Record<string, any> = Record<string, any
         this._functions = functions;
     }
 
+    public async startReplaceFailed(whenFailed: any, ...args: any[]): Promise<Record<keyof T, any>> {
+
+        const evaluated: StructuralRunnerConditionedResult<T> = await this.start(...args);
+        const succeedKeys: Array<keyof T> = Object.keys(evaluated.succeed);
+        const failedKeys: Array<keyof T> = Object.keys(evaluated.failed);
+
+        const result: Record<keyof T, any> = {} as Record<keyof T, any>;
+
+        for (const succeedKey of succeedKeys) {
+            result[succeedKey] = evaluated.succeed[succeedKey];
+        }
+        for (const failedKey of failedKeys) {
+            result[failedKey] = whenFailed;
+        }
+
+        return result;
+    }
+
+    public async startIgnoreFailed(...args: any[]): Promise<Partial<T>> {
+
+        const evaluated: StructuralRunnerConditionedResult<T> = await this.start(...args);
+        return evaluated.succeed;
+    }
+
     public async start(...args: any[]): Promise<StructuralRunnerConditionedResult<T>> {
 
         const keys: Array<keyof T> = Object.keys(this._functions);
@@ -59,33 +83,35 @@ export class StructuralRunner<T extends Record<string, any> = Record<string, any
         });
 
         const executed: Array<NamedResult<keyof T, T[keyof T]>> = await Promise.all(awaitables);
-        const results: StructuralRunnerConditionedResult<T> = executed.reduce((previous: StructuralRunnerConditionedResult<T>, current: NamedResult<keyof T, T[keyof T]>) => {
+        const results: StructuralRunnerConditionedResult<T> = executed.reduce(
+            (previous: StructuralRunnerConditionedResult<T>, current: NamedResult<keyof T, T[keyof T]>) => {
 
-            if (current.succeed === true) {
-                return {
-                    ...previous,
-                    succeed: {
-                        ...previous.succeed,
-                        [current.name]: current.result,
-                    },
-                };
-            }
+                if (current.succeed === true) {
+                    return {
+                        ...previous,
+                        succeed: {
+                            ...previous.succeed,
+                            [current.name]: current.result,
+                        },
+                    };
+                }
 
-            if (current.succeed === false) {
-                return {
-                    ...previous,
-                    failed: {
-                        ...previous.failed,
-                        [current.name]: current.reason,
-                    },
-                };
-            }
+                if (current.succeed === false) {
+                    return {
+                        ...previous,
+                        failed: {
+                            ...previous.failed,
+                            [current.name]: current.reason,
+                        },
+                    };
+                }
 
-            return previous;
-        }, {
-            succeed: {},
-            failed: {},
-        } as StructuralRunnerConditionedResult<T>);
+                return previous;
+            }, {
+                succeed: {},
+                failed: {},
+            } as StructuralRunnerConditionedResult<T>,
+        );
 
         return results;
     }
