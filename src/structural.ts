@@ -4,7 +4,7 @@
  * @description Structural
  */
 
-import { AsyncExecutable, AsyncExecutableRecord } from "./declare";
+import { AsyncExecutableRecord, NamedPromise, PromiseFunction } from "./declare";
 
 export class StructuralRunner<T extends Record<string, any>> {
 
@@ -23,9 +23,17 @@ export class StructuralRunner<T extends Record<string, any>> {
     public async run(...args: any[]): Promise<T> {
 
         const keys: Array<keyof T> = Object.keys(this._functions);
+        const list: Array<NamedPromise<keyof T, T[keyof T]>> = [];
+
         for (const key of keys) {
 
-            const executable: AsyncExecutable<T[keyof T]> = this._functions[key];
+            const executable: PromiseFunction<T[keyof T]> = this._functions[key];
+            list.push({
+                name: key,
+                func: executable(...args),
+            });
         }
+
+
     }
 }
