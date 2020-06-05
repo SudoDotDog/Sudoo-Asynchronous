@@ -1,16 +1,16 @@
 /**
  * @author WMXPY
  * @namespace Asynchronous
- * @description Parallel Runner
+ * @description Parallel Pool
  */
 
 import { KeyedPromiseFunction, PromiseFunction, RejectFunction } from "./declare";
 
-export class ParallelRunner {
+export class ParallelPool {
 
-    public static create(limit: number): ParallelRunner {
+    public static create(limit: number): ParallelPool {
 
-        return new ParallelRunner(limit);
+        return new ParallelPool(limit);
     }
 
     private readonly _limit: number;

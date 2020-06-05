@@ -7,7 +7,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { ParallelRunner } from "../../src/parallel";
+import { ParallelPool } from "../../src/parallel";
 
 describe('Given {Parallel} Class', (): void => {
 
@@ -17,7 +17,7 @@ describe('Given {Parallel} Class', (): void => {
 
         const LIMIT: number = 5;
 
-        const parallel: ParallelRunner = ParallelRunner.create(LIMIT);
-        expect(parallel).to.be.instanceOf(ParallelRunner);
+        const parallel: ParallelPool = ParallelPool.create(LIMIT);
+        expect(parallel).to.be.instanceOf(ParallelPool);
     });
 });
