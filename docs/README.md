@@ -6,3 +6,11 @@
 [![downloads](https://img.shields.io/npm/dm/@sudoo/asynchronous.svg)](https://www.npmjs.com/package/@sudoo/asynchronous)
 
 :speedboat: Asynchronous Management
+
+## Install
+
+```sh
+yarn add @sudoo/asynchronous
+# Or
+npm install @sudoo/asynchronous --save
+```
