@@ -14,6 +14,8 @@ export type KeyedPromiseFunction<T> = {
     readonly func: PromiseFunction<T>;
 };
 
-export type Promisify<T extends Record<string, any>> = {
-    [K in keyof T]: Promise<T[K]>;
+export type AsyncExecutable<T extends any> = (...args: any[]) => Promise<T>;
+
+export type AsyncExecutableRecord<T extends Record<string, any>> = {
+    [K in keyof T]: AsyncExecutable<T[K]>;
 };
