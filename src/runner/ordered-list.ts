@@ -1,22 +1,22 @@
 /**
  * @author WMXPY
  * @namespace Asynchronous_Runner
- * @description List Ordered
+ * @description Ordered List 
  */
 
 import { AsyncNestedExecutableArray, KeyedResult, NamedResult, PromiseFunction } from "../declare";
 
-export type ListOrderedRunnerConditionedResult<T> = {
+export type OrderedListRunnerConditionedResult<T> = {
 
     readonly succeed: Record<number, T[]>;
     readonly failed: Record<number, any>;
 };
 
-export class ListOrderedRunner<T extends any = any> {
+export class OrderedListRunner<T extends any = any> {
 
     public static create<T extends any = any>(functions: AsyncNestedExecutableArray<T>) {
 
-        return new ListOrderedRunner<T>(functions);
+        return new OrderedListRunner<T>(functions);
     }
 
     private readonly _functions: AsyncNestedExecutableArray<T>;
@@ -26,7 +26,7 @@ export class ListOrderedRunner<T extends any = any> {
         this._functions = functions;
     }
 
-    public async start(...args: any[]): Promise<ListOrderedRunnerConditionedResult<T>> {
+    public async start(...args: any[]): Promise<OrderedListRunnerConditionedResult<T>> {
 
         const awaitables: Array<Promise<KeyedResult<T[]>>> =
             this._functions.map((each: PromiseFunction<T[]>, index: number) => {
@@ -48,8 +48,8 @@ export class ListOrderedRunner<T extends any = any> {
             });
 
         const executed: Array<KeyedResult<T[]>> = await Promise.all(awaitables);
-        const results: ListOrderedRunnerConditionedResult<T> = executed.reduce(
-            (previous: ListOrderedRunnerConditionedResult<T>, current: KeyedResult<T[]>) => {
+        const results: OrderedListRunnerConditionedResult<T> = executed.reduce(
+            (previous: OrderedListRunnerConditionedResult<T>, current: KeyedResult<T[]>) => {
 
                 if (current.succeed === true) {
                     return {
@@ -75,7 +75,7 @@ export class ListOrderedRunner<T extends any = any> {
             }, {
                 succeed: [],
                 failed: {},
-            } as ListOrderedRunnerConditionedResult<T>,
+            } as OrderedListRunnerConditionedResult<T>,
         );
 
         return results;
