@@ -99,7 +99,7 @@ export class OrderedListRunner<T extends any = any> {
 
                 return previous;
             }, {
-                succeed: [],
+                succeed: {},
                 failed: {},
             } as OrderedListRunnerConditionedResult<T>,
         );

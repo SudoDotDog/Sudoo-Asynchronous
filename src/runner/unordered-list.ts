@@ -6,17 +6,17 @@
 
 import { AsyncExecutableArray, KeyedResult, PromiseFunction } from "../declare";
 
-export type NestedOrderedListRunnerConditionedResult<T> = {
+export type UnorderedListRunnerResult<T> = {
 
-    readonly succeed: Record<number, T>;
+    readonly succeed: T[];
     readonly failed: Record<number, any>;
 };
 
-export class NestedOrderedListRunner<T extends any = any> {
+export class UnorderedListRunner<T extends any = any> {
 
     public static create<T extends any = any>(functions: AsyncExecutableArray<T>) {
 
-        return new NestedOrderedListRunner<T>(functions);
+        return new UnorderedListRunner<T>(functions);
     }
 
     private readonly _functions: AsyncExecutableArray<T>;
@@ -26,7 +26,13 @@ export class NestedOrderedListRunner<T extends any = any> {
         this._functions = functions;
     }
 
-    public async start(...args: any[]): Promise<NestedOrderedListRunnerConditionedResult<T>> {
+    public async startIgnoreFiled(...args: any[]): Promise<T[]> {
+
+        const evaluated: UnorderedListRunnerResult<T> = await this.start(...args);
+        return evaluated.succeed;
+    }
+
+    public async start(...args: any[]): Promise<UnorderedListRunnerResult<T>> {
 
         const awaitables: Array<Promise<KeyedResult<T>>> =
             this._functions.map((each: PromiseFunction<T>, index: number) => {
@@ -48,16 +54,13 @@ export class NestedOrderedListRunner<T extends any = any> {
             });
 
         const executed: Array<KeyedResult<T>> = await Promise.all(awaitables);
-        const results: NestedOrderedListRunnerConditionedResult<T> = executed.reduce(
-            (previous: NestedOrderedListRunnerConditionedResult<T>, current: KeyedResult<T>) => {
+        const results: UnorderedListRunnerResult<T> = executed.reduce(
+            (previous: UnorderedListRunnerResult<T>, current: KeyedResult<T>) => {
 
                 if (current.succeed === true) {
                     return {
                         ...previous,
-                        succeed: {
-                            ...previous.succeed,
-                            [current.key]: current.result,
-                        },
+                        succeed: [...previous.succeed, current.result],
                     };
                 }
 
@@ -75,7 +78,7 @@ export class NestedOrderedListRunner<T extends any = any> {
             }, {
                 succeed: [],
                 failed: {},
-            } as NestedOrderedListRunnerConditionedResult<T>,
+            } as UnorderedListRunnerResult<T>,
         );
 
         return results;
