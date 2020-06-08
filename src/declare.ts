@@ -8,7 +8,7 @@ export type PromiseFunction<T> = (...args: any[]) => Promise<T>;
 
 export type RejectFunction = (reason: any) => boolean;
 
-export type KeyedResult<K, T> = {
+export type KeyedResult<T> = {
     readonly key: number;
 } & ({
     readonly succeed: true;
@@ -55,3 +55,5 @@ export type NamedPromiseFunction<K, T> = {
 export type AsyncExecutableRecord<T extends Record<string, any>> = {
     [K in keyof T]: PromiseFunction<T[K]>;
 };
+
+export type AsyncNestedExecutableArray<T extends any> = Array<PromiseFunction<T[]>>;
