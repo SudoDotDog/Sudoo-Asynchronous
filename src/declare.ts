@@ -55,5 +55,5 @@ export type NamedPromiseFunction<K, T> = {
 export type AsyncExecutableRecord<T extends Record<string, any>> = {
     [K in keyof T]: PromiseFunction<T[K]>;
 };
-
+export type AsyncExecutableArray<T extends any> = Array<PromiseFunction<T>>;
 export type AsyncNestedExecutableArray<T extends any> = Array<PromiseFunction<T[]>>;

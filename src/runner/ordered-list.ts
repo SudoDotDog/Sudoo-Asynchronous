@@ -4,34 +4,34 @@
  * @description Ordered List 
  */
 
-import { AsyncNestedExecutableArray, KeyedResult, NamedResult, PromiseFunction } from "../declare";
+import { AsyncExecutableArray, KeyedResult, NamedResult, PromiseFunction } from "../declare";
 
 export type OrderedListRunnerConditionedResult<T> = {
 
-    readonly succeed: Record<number, T[]>;
+    readonly succeed: Record<number, T>;
     readonly failed: Record<number, any>;
 };
 
 export class OrderedListRunner<T extends any = any> {
 
-    public static create<T extends any = any>(functions: AsyncNestedExecutableArray<T>) {
+    public static create<T extends any = any>(functions: AsyncExecutableArray<T>) {
 
         return new OrderedListRunner<T>(functions);
     }
 
-    private readonly _functions: AsyncNestedExecutableArray<T>;
+    private readonly _functions: AsyncExecutableArray<T>;
 
-    private constructor(functions: AsyncNestedExecutableArray<T>) {
+    private constructor(functions: AsyncExecutableArray<T>) {
 
         this._functions = functions;
     }
 
     public async start(...args: any[]): Promise<OrderedListRunnerConditionedResult<T>> {
 
-        const awaitables: Array<Promise<KeyedResult<T[]>>> =
-            this._functions.map((each: PromiseFunction<T[]>, index: number) => {
-                return new Promise((resolve: (status: KeyedResult<T[]>) => void) => {
-                    each(...args).then((result: T[keyof T]) => {
+        const awaitables: Array<Promise<KeyedResult<T>>> =
+            this._functions.map((each: PromiseFunction<T>, index: number) => {
+                return new Promise((resolve: (status: KeyedResult<T>) => void) => {
+                    each(...args).then((result: T) => {
                         resolve({
                             key: index,
                             succeed: true,
@@ -47,9 +47,9 @@ export class OrderedListRunner<T extends any = any> {
                 });
             });
 
-        const executed: Array<KeyedResult<T[]>> = await Promise.all(awaitables);
+        const executed: Array<KeyedResult<T>> = await Promise.all(awaitables);
         const results: OrderedListRunnerConditionedResult<T> = executed.reduce(
-            (previous: OrderedListRunnerConditionedResult<T>, current: KeyedResult<T[]>) => {
+            (previous: OrderedListRunnerConditionedResult<T>, current: KeyedResult<T>) => {
 
                 if (current.succeed === true) {
                     return {
