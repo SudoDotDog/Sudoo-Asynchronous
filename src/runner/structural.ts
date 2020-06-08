@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
+ * @namespace Asynchronous_Runner
  * @description Structural
  */
 
-import { AsyncExecutableRecord, NamedPromiseFunction, NamedResult, PromiseFunction } from "./declare";
+import { AsyncExecutableRecord, NamedPromiseFunction, NamedResult, PromiseFunction } from "../declare";
 
 export type StructuralRunnerConditionedResult<T> = {
 

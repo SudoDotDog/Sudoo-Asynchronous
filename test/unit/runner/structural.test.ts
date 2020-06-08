@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
+ * @namespace Asynchronous_Runner
  * @description Structural
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { StructuralRunner } from "../../src";
+import { StructuralRunner } from "../../../src";
 
 describe('Given {StructuralRunner} Class', (): void => {
 
