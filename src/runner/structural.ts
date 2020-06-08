@@ -64,23 +64,24 @@ export class StructuralRunner<T extends Record<string, any> = Record<string, any
             });
         }
 
-        const awaitables = list.map((each: NamedPromiseFunction<keyof T, T[keyof T]>) => {
-            return new Promise((resolve: (status: NamedResult<keyof T, T[keyof T]>) => void) => {
-                each.func(...args).then((result: T[keyof T]) => {
-                    resolve({
-                        name: each.name,
-                        succeed: true,
-                        result,
-                    });
-                }).catch((reason: any) => {
-                    resolve({
-                        name: each.name,
-                        succeed: false,
-                        reason,
+        const awaitables: Array<Promise<NamedResult<keyof T, T[keyof T]>>> =
+            list.map((each: NamedPromiseFunction<keyof T, T[keyof T]>) => {
+                return new Promise((resolve: (status: NamedResult<keyof T, T[keyof T]>) => void) => {
+                    each.func(...args).then((result: T[keyof T]) => {
+                        resolve({
+                            name: each.name,
+                            succeed: true,
+                            result,
+                        });
+                    }).catch((reason: any) => {
+                        resolve({
+                            name: each.name,
+                            succeed: false,
+                            reason,
+                        });
                     });
                 });
             });
-        });
 
         const executed: Array<NamedResult<keyof T, T[keyof T]>> = await Promise.all(awaitables);
         const results: StructuralRunnerConditionedResult<T> = executed.reduce(
