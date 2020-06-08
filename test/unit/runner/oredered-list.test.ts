@@ -82,4 +82,48 @@ describe('Given {OrderedListRunner} Class', (): void => {
             },
         });
     });
+
+    it('should be able to execute - ignore', async (): Promise<void> => {
+
+        const errorInstance: Error = new Error(chance.string());
+        const value1: number = chance.integer();
+        const value2: number = chance.integer();
+        const runner: OrderedListRunner<number> = OrderedListRunner.create([
+            async () => value1,
+            async () => value2,
+            async () => {
+                throw errorInstance;
+            },
+        ]);
+
+        const result = await runner.startIgnoreFiled();
+
+        expect(result).to.be.deep.equal({
+            0: value1,
+            1: value2,
+        });
+    });
+
+    it('should be able to execute - replace', async (): Promise<void> => {
+
+        const errorInstance: Error = new Error(chance.string());
+        const value1: number = chance.integer();
+        const value2: number = chance.integer();
+        const replace: number = chance.integer();
+        const runner: OrderedListRunner<number> = OrderedListRunner.create([
+            async () => value1,
+            async () => value2,
+            async () => {
+                throw errorInstance;
+            },
+        ]);
+
+        const result = await runner.startReplaceFailed(replace);
+
+        expect(result).to.be.deep.equal({
+            0: value1,
+            1: value2,
+            2: replace,
+        });
+    });
 });
