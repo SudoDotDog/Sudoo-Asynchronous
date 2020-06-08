@@ -21,4 +21,65 @@ describe('Given {OrderedListRunner} Class', (): void => {
 
         expect(runner).to.be.instanceOf(OrderedListRunner);
     });
+
+
+    it('should be able to execute', async (): Promise<void> => {
+
+        const value: number = chance.integer();
+        const runner: OrderedListRunner<number> = OrderedListRunner.create([
+            async () => value,
+        ]);
+
+        const result = await runner.start();
+
+        expect(result).to.be.deep.equal({
+            failed: {},
+            succeed: {
+                0: value,
+            },
+        });
+    });
+
+    it('should be able to execute - args', async (): Promise<void> => {
+
+        const value: number = chance.integer();
+        const runner: OrderedListRunner<number> = OrderedListRunner.create([
+            async (current: number) => current + 1,
+        ]);
+
+        const result = await runner.start(value);
+
+        expect(result).to.be.deep.equal({
+            failed: {},
+            succeed: {
+                0: value + 1,
+            },
+        });
+    });
+
+    it('should be able to execute - multiple', async (): Promise<void> => {
+
+        const errorInstance: Error = new Error(chance.string());
+        const value1: number = chance.integer();
+        const value2: number = chance.integer();
+        const runner: OrderedListRunner<number> = OrderedListRunner.create([
+            async () => value1,
+            async () => value2,
+            async () => {
+                throw errorInstance;
+            },
+        ]);
+
+        const result = await runner.start();
+
+        expect(result).to.be.deep.equal({
+            failed: {
+                2: errorInstance,
+            },
+            succeed: {
+                0: value1,
+                1: value2,
+            },
+        });
+    });
 });
