@@ -14,7 +14,7 @@ export type StructuralRunnerConditionedResult<T> = {
 
 export class StructuralRunner<T extends Record<string, any> = Record<string, any>> {
 
-    public static create<T extends Record<string, any> = Record<string, any>>(functions: AsyncExecutableRecord<T>) {
+    public static create<T extends Record<string, any> = Record<string, any>>(functions: AsyncExecutableRecord<T>): StructuralRunner<T> {
 
         return new StructuralRunner<T>(functions);
     }

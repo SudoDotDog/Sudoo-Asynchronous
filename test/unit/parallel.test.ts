@@ -11,6 +11,7 @@ import { ParallelPool } from "../../src";
 
 describe('Given {ParallelPool} Class', (): void => {
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const chance: Chance.Chance = new Chance('asynchronous-parallel');
 
     it('should be able to construct', (): void => {

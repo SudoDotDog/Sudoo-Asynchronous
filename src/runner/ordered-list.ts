@@ -14,7 +14,7 @@ export type OrderedListRunnerConditionedResult<T> = {
 
 export class OrderedListRunner<T extends any = any> {
 
-    public static create<T extends any = any>(functions: AsyncExecutableArray<T>) {
+    public static create<T extends any = any>(functions: AsyncExecutableArray<T>): OrderedListRunner<T> {
 
         return new OrderedListRunner<T>(functions);
     }

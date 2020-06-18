@@ -14,7 +14,7 @@ export type UnorderedListRunnerResult<T> = {
 
 export class UnorderedListRunner<T extends any = any> {
 
-    public static create<T extends any = any>(functions: AsyncExecutableArray<T>) {
+    public static create<T extends any = any>(functions: AsyncExecutableArray<T>): UnorderedListRunner<T> {
 
         return new UnorderedListRunner<T>(functions);
     }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 /**
  * @author WMXPY
  * @namespace Asynchronous_Runner
@@ -7,7 +8,7 @@
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { OrderedListRunner, UnorderedListRunner } from "../../../src";
+import { UnorderedListRunner } from "../../../src";
 
 describe('Given {UnorderedListRunner} Class', (): void => {
 

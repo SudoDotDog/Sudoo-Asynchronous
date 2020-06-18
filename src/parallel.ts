@@ -37,7 +37,7 @@ export class ParallelPool {
         const cloned: Array<KeyedPromiseFunction<T>> = this._mapPromiseFunctions(promises);
         const responses: T[] = [];
 
-        const run = async (resolve: () => void, reject: (reason: any) => void) => {
+        const run = (resolve: () => void, reject: (reason: any) => void): void => {
 
             const func: KeyedPromiseFunction<T> | undefined = cloned.shift();
 

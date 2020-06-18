@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/require-await */
 /**
  * @author WMXPY
  * @namespace Asynchronous_Runner

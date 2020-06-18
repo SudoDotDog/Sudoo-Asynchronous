@@ -110,7 +110,6 @@ describe('Given {ParallelPool} Class Scenario', (): void => {
             });
             functions.push((): Promise<string> => new Promise<string>((resolve: (value: string) => void, reject: (reason: any) => void) => {
 
-                // tslint:disable-next-line: no-magic-numbers
                 if (i === 7) {
                     reject('WRONG');
                     return;
@@ -122,10 +121,10 @@ describe('Given {ParallelPool} Class Scenario', (): void => {
             }));
         }
 
-        // tslint:disable-next-line: no-magic-numbers
         expectedResult[7] = undefined as any;
 
         const parallel: ParallelPool = ParallelPool.create(LIMIT);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         parallel.whenReject((_: any) => true);
 
         const result = await parallel.execute(functions);
