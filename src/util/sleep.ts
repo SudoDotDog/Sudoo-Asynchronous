@@ -4,14 +4,33 @@
  * @description Sleep
  */
 
-export const sleep = (time: number): Promise<number> => {
+export class Sleep {
 
-    const startTime: number = Date.now();
+    public static create(): Sleep {
 
-    return Promise((resolve: () => void) => {
+        return new Sleep();
+    }
 
-        setTimeout(() => {
+    private _timer: any;
+    private _resolve: (time: number) => void | null;
 
-        }, timeout);
-    });
-};
+    private constructor() {
+
+        this._resolve = null;
+    }
+
+    public start(time: number): Promise<number> {
+
+        const startTime: number = Date.now();
+
+        return new Promise<number>((resolve: (time: number) => void) => {
+
+            this._resolve = resolve;
+            this._timer = setTimeout(() => {
+
+                const endTime: number = Date.now();
+                resolve(endTime - startTime);
+            }, time);
+        });
+    }
+}
