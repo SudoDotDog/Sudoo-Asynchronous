@@ -22,7 +22,21 @@ export class Sleep {
         this._resolve = null;
     }
 
+    public get ready(): boolean {
+        return this._timer === null
+            || this._startTime === null
+            || this._resolve === null;
+    }
+
+    public get holding(): boolean {
+        return !this.ready;
+    }
+
     public start(time: number): Promise<number> {
+
+        if (this.holding) {
+            this.stop();
+        }
 
         const startTime: number = Date.now();
         this._startTime = startTime;
@@ -47,7 +61,6 @@ export class Sleep {
         if (this._timer === null
             || this._startTime === null
             || this._resolve === null) {
-
             return NaN;
         }
 

@@ -33,6 +33,9 @@ describe('Given {Sleep} Class', (): void => {
         const endTime: number = Date.now();
         const difference: number = endTime - startTime;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(sleep.ready).to.be.true;
+
         expect(result).to.be.below(value + 5);
         expect(result).to.be.above(value - 5);
 
@@ -57,6 +60,9 @@ describe('Given {Sleep} Class', (): void => {
 
         const endTime: number = Date.now();
         const difference: number = endTime - startTime;
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        expect(sleep.ready).to.be.true;
 
         expect(responseDifference).to.be.below(actualValue + 5);
         expect(responseDifference).to.be.above(actualValue - 5);
