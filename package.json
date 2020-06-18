@@ -2,9 +2,6 @@
   "name": "@sudoo/asynchronous",
   "version": "2.1.0",
   "description": ":speedboat: Asynchronous Management",
-  "directories": {
-    "doc": "docs"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Sudoo-Asynchronous.git"
@@ -21,7 +18,7 @@
   "dependencies": {},
   "devDependencies": {
     "@sudoo/io": "^1.8.0",
-    "@sudoo/triforce": "^2.4.1"
+    "@sudoo/triforce": "^2.7.2"
   },
   "nyc": {
     "extension": [
@@ -36,9 +33,6 @@
       "text-summary"
     ],
     "report-dir": "coverage",
-    "require": [
-      "./test/tshook.js"
-    ],
     "sourceMap": true
   }
 }
