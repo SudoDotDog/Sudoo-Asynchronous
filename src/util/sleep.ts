@@ -16,6 +16,7 @@ export class Sleep {
 
     private constructor() {
 
+        this._timer = null;
         this._resolve = null;
     }
 
@@ -29,6 +30,9 @@ export class Sleep {
             this._timer = setTimeout(() => {
 
                 const endTime: number = Date.now();
+
+                this._resolve = null;
+                this._timer = null;
                 resolve(endTime - startTime);
             }, time);
         });
