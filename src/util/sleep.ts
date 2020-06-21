@@ -11,6 +11,12 @@ export class Sleep {
         return new Sleep();
     }
 
+    public static async for(time: number): Promise<number> {
+
+        const sleep: Sleep = this.create();
+        return await sleep.start(time);
+    }
+
     private _timer: any;
     private _startTime: number | null;
     private _resolve: ((time: number) => void) | null;
