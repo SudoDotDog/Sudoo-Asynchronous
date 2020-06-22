@@ -4,7 +4,7 @@
  * @description Declare
  */
 
-export type PromiseFunction<T, A extends any[] = []> = (...args: A) => Promise<T>;
+export type PromiseFunction<T, A extends any[] = any[]> = (...args: A) => Promise<T>;
 
 export type RejectFunction = (reason: any) => boolean;
 

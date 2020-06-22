@@ -6,9 +6,9 @@
 
 import { PromiseFunction } from "../declare";
 
-export class ExecutableFuture<T extends any = any, A extends any[] = []> {
+export class ExecutableFuture<T extends any = any, A extends any[] = any[]> {
 
-    public static create<T extends any = any, A extends any[] = []>(func: PromiseFunction<T, A>): ExecutableFuture<T, A> {
+    public static create<T extends any = any, A extends any[] = any[]>(func: PromiseFunction<T, A>): ExecutableFuture<T, A> {
 
         return new ExecutableFuture<T, A>(func);
     }
