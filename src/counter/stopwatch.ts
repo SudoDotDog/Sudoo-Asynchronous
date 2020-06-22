@@ -1,14 +1,14 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
+ * @namespace Asynchronous_Counter
  * @description Stopwatch
  */
 
-export class CounterStopwatch {
+export class StopwatchCounter {
 
-    public static create(resetInterval: number, directlyStart: boolean = false): CounterStopwatch {
+    public static create(resetInterval: number, directlyStart: boolean = false): StopwatchCounter {
 
-        return new CounterStopwatch(resetInterval, directlyStart);
+        return new StopwatchCounter(resetInterval, directlyStart);
     }
 
     private readonly _resetInterval: number;
