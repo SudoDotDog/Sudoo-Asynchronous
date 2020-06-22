@@ -1,13 +1,13 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
+ * @namespace Asynchronous_Pool
  * @description Parallel
  * @override Unit Test
  */
 
 import { expect } from "chai";
 import * as Chance from "chance";
-import { ParallelPool } from "../../src";
+import { ParallelPool } from "../../../src";
 
 describe('Given {ParallelPool} Class', (): void => {
 

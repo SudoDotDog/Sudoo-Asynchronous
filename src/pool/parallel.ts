@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
- * @description Parallel Pool
+ * @namespace Asynchronous_Pool
+ * @description Pool
  */
 
-import { KeyedPromiseFunction, PromiseFunction, RejectFunction } from "./declare";
+import { KeyedPromiseFunction, PromiseFunction, RejectFunction } from "../declare";
 
 export class ParallelPool {
 
