@@ -1,10 +1,10 @@
 /**
  * @author WMXPY
- * @namespace Asynchronous
+ * @namespace AsynchronousA
  * @description Declare
  */
 
-export type PromiseFunction<T> = (...args: any[]) => Promise<T>;
+export type PromiseFunction<T, A extends any[] = []> = (...args: A) => Promise<T>;
 
 export type RejectFunction = (reason: any) => boolean;
 

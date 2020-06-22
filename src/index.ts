@@ -6,6 +6,7 @@
 
 export * from "./counter/stopwatch";
 export * from "./declare";
+export * from "./future/executable";
 export * from "./pool/parallel";
 export * from "./runner/ordered-list";
 export * from "./runner/structural";
