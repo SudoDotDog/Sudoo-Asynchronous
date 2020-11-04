@@ -14,3 +14,19 @@ yarn add @sudoo/asynchronous
 # Or
 npm install @sudoo/asynchronous --save
 ```
+
+## Parallel Pool
+
+Parallel Pool is use to execute a large amount of `Promise`, with a maximum parallel count.
+
+```ts
+import { ParallelPool } from "@sudoo/asynchronous";
+
+const parallel: ParallelPool = ParallelPool.create(5);
+parallel.execute([
+    async () => /* Some Thing */,
+    async () => /* Some Thing */,
+    async () => /* Some Thing */,
+    ...,
+])
+```
