@@ -17,7 +17,7 @@ npm install @sudoo/asynchronous --save
 
 ## Parallel Pool
 
-Parallel Pool is use to execute a large amount of `Promise`, with a maximum parallel count.
+Parallel Pool is used to execute a large amount of `Promise`, with a maximum parallel count.
 
 ```ts
 import { ParallelPool } from "@sudoo/asynchronous";
@@ -30,3 +30,7 @@ parallel.execute([
     ...,
 ])
 ```
+
+## Other Usage
+
+This document is working in progress. Check out `Runner` functions for the ability to run `Promises` within an order and result containing.
