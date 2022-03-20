@@ -12,9 +12,9 @@ export type UnorderedListRunnerResult<T> = {
     readonly failed: Record<number, any>;
 };
 
-export class UnorderedListRunner<T extends any = any> {
+export class UnorderedListRunner<T = any> {
 
-    public static create<T extends any = any>(functions: AsyncExecutableArray<T>): UnorderedListRunner<T> {
+    public static create<T = any>(functions: AsyncExecutableArray<T>): UnorderedListRunner<T> {
 
         return new UnorderedListRunner<T>(functions);
     }

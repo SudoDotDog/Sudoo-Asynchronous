@@ -35,11 +35,11 @@ describe('Given {Sleep} Class', (): void => {
 
         expect(sleep.ready).to.be.true;
 
-        expect(result).to.be.below(value + 20);
-        expect(result).to.be.above(value - 20);
+        expect(result).to.be.below(value + value);
+        expect(result).to.be.above(value - value);
 
-        expect(difference).to.be.below(value + 20);
-        expect(difference).to.be.above(value - 20);
+        expect(difference).to.be.below(value + value);
+        expect(difference).to.be.above(value - value);
     });
 
     it('should be able to sleep and stop break', async (): Promise<void> => {
@@ -62,13 +62,13 @@ describe('Given {Sleep} Class', (): void => {
 
         expect(sleep.ready).to.be.true;
 
-        expect(responseDifference).to.be.below(actualValue + 20);
-        expect(responseDifference).to.be.above(actualValue - 20);
+        expect(responseDifference).to.be.below(actualValue + actualValue);
+        expect(responseDifference).to.be.above(actualValue - actualValue);
 
-        expect(result).to.be.below(actualValue + 20);
-        expect(result).to.be.above(actualValue - 20);
+        expect(result).to.be.below(actualValue + actualValue);
+        expect(result).to.be.above(actualValue - actualValue);
 
-        expect(difference).to.be.below(actualValue + 20);
-        expect(difference).to.be.above(actualValue - 20);
+        expect(difference).to.be.below(actualValue + actualValue);
+        expect(difference).to.be.above(actualValue - actualValue);
     });
 });

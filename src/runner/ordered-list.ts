@@ -12,9 +12,9 @@ export type OrderedListRunnerConditionedResult<T> = {
     readonly failed: Record<number, any>;
 };
 
-export class OrderedListRunner<T extends any = any> {
+export class OrderedListRunner<T = any> {
 
-    public static create<T extends any = any>(functions: AsyncExecutableArray<T>): OrderedListRunner<T> {
+    public static create<T = any>(functions: AsyncExecutableArray<T>): OrderedListRunner<T> {
 
         return new OrderedListRunner<T>(functions);
     }

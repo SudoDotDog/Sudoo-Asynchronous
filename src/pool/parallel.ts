@@ -30,7 +30,7 @@ export class ParallelPool {
         return this;
     }
 
-    public execute<T extends any = any>(promises: Array<PromiseFunction<T>>): Promise<T[]> {
+    public execute<T = any>(promises: Array<PromiseFunction<T>>): Promise<T[]> {
 
         let count: number = 0;
 
@@ -83,7 +83,7 @@ export class ParallelPool {
         });
     }
 
-    private _mapPromiseFunctions<T extends any = any>(promises: Array<PromiseFunction<T>>): Array<KeyedPromiseFunction<T>> {
+    private _mapPromiseFunctions<T = any>(promises: Array<PromiseFunction<T>>): Array<KeyedPromiseFunction<T>> {
 
         return promises.map((func: PromiseFunction<T>, index: number): KeyedPromiseFunction<T> => {
 
