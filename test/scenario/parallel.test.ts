@@ -84,7 +84,7 @@ describe('Given {ParallelPool} Class Scenario', (): void => {
         try {
             await parallel.execute(functions);
         } catch (reason) {
-            error = reason;
+            error = reason as any as string;
         }
 
         expect(error).to.be.equal('WRONG');
@@ -177,7 +177,7 @@ describe('Given {ParallelPool} Class Scenario', (): void => {
         try {
             await parallel.execute(functions);
         } catch (reason) {
-            error = reason;
+            error = reason as any as string;
         }
 
         expect(error).to.be.equal('WRONG');

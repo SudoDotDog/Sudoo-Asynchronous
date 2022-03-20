@@ -33,14 +33,13 @@ describe('Given {Sleep} Class', (): void => {
         const endTime: number = Date.now();
         const difference: number = endTime - startTime;
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(sleep.ready).to.be.true;
 
-        expect(result).to.be.below(value + 5);
-        expect(result).to.be.above(value - 5);
+        expect(result).to.be.below(value + 20);
+        expect(result).to.be.above(value - 20);
 
-        expect(difference).to.be.below(value + 5);
-        expect(difference).to.be.above(value - 5);
+        expect(difference).to.be.below(value + 20);
+        expect(difference).to.be.above(value - 20);
     });
 
     it('should be able to sleep and stop break', async (): Promise<void> => {
@@ -61,16 +60,15 @@ describe('Given {Sleep} Class', (): void => {
         const endTime: number = Date.now();
         const difference: number = endTime - startTime;
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(sleep.ready).to.be.true;
 
-        expect(responseDifference).to.be.below(actualValue + 5);
-        expect(responseDifference).to.be.above(actualValue - 5);
+        expect(responseDifference).to.be.below(actualValue + 20);
+        expect(responseDifference).to.be.above(actualValue - 20);
 
-        expect(result).to.be.below(actualValue + 5);
-        expect(result).to.be.above(actualValue - 5);
+        expect(result).to.be.below(actualValue + 20);
+        expect(result).to.be.above(actualValue - 20);
 
-        expect(difference).to.be.below(actualValue + 5);
-        expect(difference).to.be.above(actualValue - 5);
+        expect(difference).to.be.below(actualValue + 20);
+        expect(difference).to.be.above(actualValue - 20);
     });
 });
