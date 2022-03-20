@@ -1,7 +1,7 @@
 {
   "name": "@sudoo/asynchronous",
   "version": "2.3.1",
-  "description": ":speedboat: Asynchronous Management",
+  "description": "Asynchronous Management",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SudoDotDog/Sudoo-Asynchronous.git"
@@ -15,10 +15,8 @@
     "url": "https://github.com/SudoDotDog/Sudoo-Asynchronous/issues"
   },
   "homepage": "https://github.com/SudoDotDog/Sudoo-Asynchronous#readme",
-  "dependencies": {},
   "devDependencies": {
-    "@sudoo/io": "^1.8.0",
-    "@sudoo/triforce": "^2.9.11"
+    "@sudoo/triforce": "^3.2.0"
   },
   "nyc": {
     "extension": [
