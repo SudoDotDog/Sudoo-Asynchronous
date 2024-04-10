@@ -32,6 +32,10 @@ export class ParallelPool {
 
     public execute<T = any>(promises: Array<PromiseFunction<T>>): Promise<T[]> {
 
+        if (!Array.isArray(promises) || promises.length === 0) {
+            return Promise.resolve([]);
+        }
+
         let count: number = 0;
 
         const cloned: Array<KeyedPromiseFunction<T>> = this._mapPromiseFunctions(promises);
